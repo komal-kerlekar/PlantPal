@@ -1,0 +1,228 @@
+/* ============================= */
+/* CARE HUB LAYOUT */
+/* ============================= */
+
+.carehub-container {
+  padding-bottom: 10px;
+}
+
+/* When GreenAid is active, form an unbroken flex chain */
+/* .carehub-container.chat-mode {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding-bottom: 0;
+} */
+
+.carehub-content {
+  padding: 0 12px 80px 12px;
+}
+
+/* .carehub-container.chat-mode .carehub-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  /* keep internal scroll */
+/* padding-bottom: 0;
+} */
+
+/* ============================= */
+/* HEADER + TABS */
+/* ============================= */
+
+.carehub-header {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.carehub-header h3 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.carehub-header p {
+  margin: 2px 0 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.carehub-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.tab-btn {
+  border-radius: 20px;
+  padding: 8px 22px;
+  background-color: #f1f5f1;
+  color: #2f5d50;
+  font-weight: 500;
+  border: none;
+}
+
+.tab-btn.active {
+  background-color: #2f5d50;
+  color: white;
+}
+
+
+/* ============================= */
+/* LEAFLET (UNCHANGED) */
+/* ============================= */
+
+.leaflet-intro {
+  background-color: var(--surface);
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.leaflet-module-card {
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.leaflet-module-card:hover {
+  transform: translateY(-3px);
+}
+
+.leaflet-lesson-item {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.leaflet-lesson-item:hover {
+  background: var(--surface);
+}
+
+
+/* ============================= */
+/* GREENAID */
+/* ============================= */
+
+/* .chat-container {
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #f6fff7 0%, #ffffff 100%);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+} */
+.chat-container {
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border-radius: 18px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.chat-window {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* chat-input-area no longer needed but kept harmless */
+.chat-input-area {
+  padding: 12px 12px 16px;
+  background: white;
+  flex-shrink: 0;
+}
+
+
+/* ============================= */
+/* MESSAGE STYLING */
+/* ============================= */
+
+/* .bot-msg {
+  align-self: flex-start;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 16px;
+  max-width: 85%;
+  font-size: 14px;
+  white-space: pre-line;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+} */
+.bot-msg {
+  align-self: flex-start;
+  background: var(--surface);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 16px;
+  max-width: 85%;
+  font-size: 14px;
+  white-space: pre-line;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.user-msg {
+  align-self: flex-end;
+  background: #4caf50;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 16px;
+  max-width: 80%;
+  font-size: 14px;
+}
+
+/* IMPORTANT: allow select to expand fully inside bubble */
+.bot-msg select {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.user-select {
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* ===== Article Tip Box Fix ===== */
+
+.article-tip {
+  background-color: var(--surface);
+  border-left: 4px solid var(--primary);
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: var(--text);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Slight glow for dark themes */
+body.forest .article-tip,
+body.midnight .article-tip {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ===== Article Content Text Fix ===== */
+
+.article-content p {
+  color: var(--text);
+  opacity: 1 !important;
+}
+
+.article-content ul li {
+  color: var(--text);
+}

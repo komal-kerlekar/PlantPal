@@ -1,0 +1,223 @@
+/* ========================= 
+   THEME VARIABLES
+========================= */
+
+:root {
+  --bg: #ffffff;
+  --surface: #fffcfe;
+  --text: #1a1a1a;
+  --primary: #2e7d32;
+  --accent: #66bb6a;
+  --border: rgba(0, 0, 0, 0.08);
+  --muted: rgba(0, 0, 0, 0.6);
+}
+
+/* 🌸 Pastel */
+body.pastel {
+  --bg: #e8bff8;
+  --surface: #e198fe;
+  --text: #3a2e4d;
+  --primary: #c2185b;
+  --accent: #f06292;
+  --border: rgba(0, 0, 0, 0.08);
+  --muted: rgba(0, 0, 0, 0.6);
+}
+
+/* 🌿 Forest */
+body.forest {
+  --bg: #0f1f17;
+  --surface: #223c2f;
+  --text: #e6f4ea;
+  --primary: #43a047;
+  --accent: #81c784;
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: rgba(255, 255, 255, 0.75);
+}
+
+/* 🌙 Midnight */
+body.midnight {
+  --bg: #0b1220;
+  --surface: #151f32;
+  --text: #e4ecff;
+  --primary: #4caf50;
+  --accent: #8bc34a;
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: rgba(255, 255, 255, 0.75);
+}
+
+/* =========================
+   BASE
+========================= */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* =========================
+   LAYOUT STRUCTURE
+========================= */
+
+.dashboard-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== FIXED HEADER ===== */
+
+.top-bar {
+  height: 60px;
+  flex-shrink: 0;
+  background: var(--surface);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.top-bar i {
+  color: var(--text);
+}
+
+/* ===== MAIN CONTENT ===== */
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 75px;
+}
+
+.content {
+  padding: 4px 20px 0 20px;
+}
+
+/* ===== FIXED BOTTOM NAV ===== */
+
+.bottom-nav {
+  height: 55px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.active-icon i {
+  color: var(--primary);
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* =========================
+   SETTINGS PANEL
+========================= */
+
+.settings-panel {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  width: 220px;
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.settings-panel hr {
+  border-color: var(--border);
+}
+
+.settings-panel h6,
+.settings-panel div {
+  color: var(--text);
+}
+
+/* =========================
+   BUTTONS & MENU
+========================= */
+
+button {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: var(--accent);
+}
+
+.menu-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+.menu-item {
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.menu-item:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border: 1px solid var(--primary);
+}
+
+/* =========================
+   GLOBAL ELEMENT COLORS
+========================= */
+
+.card,
+.leaflet-module-card,
+.leaflet-lesson-item,
+.carehub-container {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text);
+}
+
+p {
+  color: var(--text);
+}
+
+.text-muted {
+  color: var(--muted) !important;
+}
+
+/* Fix faded lesson subtitles inside module cards */
+.leaflet-module-card p,
+.leaflet-module-card small {
+  color: var(--muted);
+  opacity: 0.9;
+}
