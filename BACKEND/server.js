@@ -11,7 +11,10 @@ connectDB();
 const app = express();
 // middleware
 app.use(cors({
-  origin: "http://localhost:5173",  // Vite frontend
+  origin: [
+    "http://localhost:5173",
+    "https://plantpal-psi.vercel.app"
+  ],
   credentials: true
 }));
 app.use(express.json());
