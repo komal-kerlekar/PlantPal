@@ -1,7 +1,9 @@
 .checklist-page {
   background: #f4f7f6;
-  height: 100vh;       /* IMPORTANT */
-  overflow-y: auto;    /* IMPORTANT */
+  height: 100vh;
+  /* IMPORTANT */
+  overflow-y: auto;
+  /* IMPORTANT */
   padding-bottom: 80px;
   padding-left: 12px;
   padding-right: 12px;
@@ -39,7 +41,7 @@
   margin-bottom: 8px;
   padding: 12px;
   border: none;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 .task-item:hover {
@@ -50,10 +52,14 @@
   opacity: 0.5;
   text-decoration: line-through;
 }
+
 /* .list-group {
   overflow-x: hidden;
 } */
-
+.check-circle.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
 
 .task-text {
   font-size: 15px;
@@ -91,4 +97,3 @@
   text-decoration: line-through;
   opacity: 0.6;
 }
-

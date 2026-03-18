@@ -60,7 +60,11 @@ export default function CareChecklist() {
   };
 
   // Mark as watered (with animation delay)
-  const handleMarkWatered = async (plantId, reminderId) => {
+  const handleMarkWatered = async (plantId, reminderId, dueDate) => {
+    if (isFutureDate(dueDate)) {
+      alert("You cannot mark future tasks as done 🌿");
+      return;
+    }
     try {
       const token = localStorage.getItem("token");
 
@@ -95,6 +99,16 @@ export default function CareChecklist() {
     return groups;
   }, {});
 
+  const isFutureDate = (dateString) => {
+    const today = new Date();
+    const dueDate = new Date(dateString);
+
+    today.setHours(0, 0, 0, 0);
+    dueDate.setHours(0, 0, 0, 0);
+
+    return dueDate > today;
+  };
+
   return (
     <div className="container-fluid checklist-page">
 
@@ -123,12 +137,16 @@ export default function CareChecklist() {
                   </span>
 
                   <div
-                    className={`check-circle ${justCompleted === reminder._id ? "active" : ""
-                      }`}
+                    className={`check-circle 
+    ${justCompleted === reminder._id ? "active" : ""}
+    ${isFutureDate(reminder.nextDueDate) ? "disabled" : ""}
+  `}
                     onClick={() =>
+                      !isFutureDate(reminder.nextDueDate) &&
                       handleMarkWatered(
                         reminder.plant._id,
-                        reminder._id
+                        reminder._id,
+                        reminder.nextDueDate
                       )
                     }
                   >
