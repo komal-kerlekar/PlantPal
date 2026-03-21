@@ -2,7 +2,7 @@ import './App.css';
 import Calendar from './Calendar';
 import Profile from "./Profile";
 import Auth from './Auth';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import Layout from "./Layout";
 import Dashboard from "./Dashboard";
@@ -14,17 +14,9 @@ function App() {
   return (
     <Routes>
 
-      <Route
-        path="/"
-        element={
-          localStorage.getItem("token")
-            ? <Navigate to="/dashboard" />
-            : <Navigate to="/auth" />
-        }
-      />
+      <Route path="/" element={<Navigate to="/dashboard" />} />
 
       <Route path="/auth" element={<Auth />} />
-      <Route path="/profile" element={<Profile />} />
 
       <Route
         element={
