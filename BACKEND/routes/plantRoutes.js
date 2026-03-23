@@ -22,11 +22,10 @@ const {
 } = require("../validators/plantValidator");
 
 
-// 🔥 CREATE PLANT (WITH IMAGE + VALIDATION)
+//  CREATE PLANT (WITH IMAGE + VALIDATION)
 router.post(
   "/",
   protect,
-  validate(createPlantSchema),
   createPlant
 );
 
