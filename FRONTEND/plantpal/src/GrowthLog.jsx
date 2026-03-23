@@ -131,6 +131,30 @@ const GrowthLog = () => {
       console.error("Error adding log:", error.message);
     }
   };
+  const handleDelete = async (logId) => {
+    if (!window.confirm("Delete this log?")) return;
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/logs/${logId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message);
+
+      // Update UI instantly
+      setLogs(logs.filter((log) => log._id !== logId));
+
+    } catch (error) {
+      console.error("Error deleting log:", error.message);
+    }
+  };
 
   return (
     <div className="container growth-log-page py-4">
@@ -167,8 +191,18 @@ const GrowthLog = () => {
                 <p className="card-text">{log.note}</p>
               </div>
 
-              <div className="card-footer text-muted text-end">
-                {new Date(log.createdAt).toLocaleDateString()}
+              <div className="card-footer d-flex justify-content-between align-items-center text-muted">
+
+                <small>
+                  {new Date(log.createdAt).toLocaleDateString()}
+                </small>
+
+                <i
+                  className="bi bi-trash text-danger"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleDelete(log._id)}
+                ></i>
+
               </div>
 
             </div>

@@ -36,3 +36,26 @@ exports.getLogs = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+//  DELETE LOG (User Specific)
+exports.deleteLog = async (req, res) => {
+  try {
+    const log = await Log.findById(req.params.id);
+
+    // ❌ If log doesn't exist
+    if (!log) {
+      return res.status(404).json({ message: "Log not found" });
+    }
+
+    // 🔒 VERY IMPORTANT (viva point)
+    if (log.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    await log.deleteOne();
+
+    res.json({ message: "Log deleted successfully" });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
