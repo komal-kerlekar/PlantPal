@@ -4,10 +4,10 @@ const Log = require("../models/Log");
 exports.addLog = async (req, res) => {
   try {
     const newLog = new Log({
-      user: req.user._id, // 🔥 tie log to logged-in user
+      user: req.user._id, // tie log to logged-in user
       plant: req.body.plantId,
       note: req.body.note,
-      photo: req.file ? req.file.path : null,
+      photo: req.body.photo || null,
     });
 
     await newLog.save();
@@ -21,12 +21,11 @@ exports.addLog = async (req, res) => {
   }
 };
 
-
-// 🔹 GET LOGS (User Specific)
+// GET LOGS (User Specific)
 exports.getLogs = async (req, res) => {
   try {
     const logs = await Log.find({
-      user: req.user._id   // 🔥 filter by logged-in user
+      user: req.user._id   //  filter by logged-in user
     })
       .populate("plant")
       .sort({ createdAt: -1 });

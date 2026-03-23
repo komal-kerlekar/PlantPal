@@ -9,7 +9,6 @@ const { protect } = require("../middlewares/authMiddleware");
 router.post(
   "/add-log",
   protect,
-  upload.single("logPhoto"),
   addLog
 );
 

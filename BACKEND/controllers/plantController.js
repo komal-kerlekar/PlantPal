@@ -23,7 +23,7 @@ exports.createPlant = async (req, res, next) => {
       throw new Error("Plant name is required");
     }
 
-    const imagePath = req.file ? req.file.path : null;
+    const imagePath = req.body?.image || null;
 
     //  FUZZY CORRECTION
     const correctedName = fuzzyMatch(name);

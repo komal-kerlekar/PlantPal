@@ -15,7 +15,7 @@ const GrowthLog = () => {
 
   const token = localStorage.getItem("token");
 
-  // 🔹 Fetch Logs (User Specific)
+  //  Fetch Logs (User Specific)
   const fetchLogs = async () => {
     if (!token) {
       setLogs([]);
@@ -85,25 +85,32 @@ const GrowthLog = () => {
     }
   }, [location.state]);
 
-  // 🔹 Submit Log
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!selectedPlantId || !note || !photo) return;
 
-    const formData = new FormData();
-    formData.append("plantId", selectedPlantId);
-    formData.append("note", note);
-    formData.append("logPhoto", photo);
-
     try {
+      // 🔹 Convert image to base64
+      const base64Photo = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(photo);
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/logs/add-log`,
         {
           method: "POST",
           headers: {
+            "Content-Type": "application/json", // ✅ important
             Authorization: `Bearer ${token}`,
           },
-          body: formData,
+          body: JSON.stringify({
+            plantId: selectedPlantId,
+            note,
+            photo: base64Photo, // ✅ base64
+          }),
         }
       );
 
@@ -147,7 +154,7 @@ const GrowthLog = () => {
 
               {log.photo && (
                 <img
-                  src={`${import.meta.env.VITE_API_URL}/${log.photo}`}
+                  src={log.photo}
                   alt="log"
                   className="card-img-top"
                 />

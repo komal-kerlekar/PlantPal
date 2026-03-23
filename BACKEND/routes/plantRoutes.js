@@ -26,7 +26,6 @@ const {
 router.post(
   "/",
   protect,
-  upload.single("image"),
   validate(createPlantSchema),
   createPlant
 );

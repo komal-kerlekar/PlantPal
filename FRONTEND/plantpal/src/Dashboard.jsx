@@ -52,15 +52,29 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const formData = new FormData();
-      formData.append("name", plantName);
-      formData.append("location", location);
-      if (image) formData.append("image", image);
+      let base64Image = null;
+
+      //  Convert image to base64 
+      if (image) {
+        base64Image = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(image);
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = (error) => reject(error);
+        });
+      }
 
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/plants`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: plantName,
+          location,
+          image: base64Image,
+        }),
       });
 
       if (res.ok) {
