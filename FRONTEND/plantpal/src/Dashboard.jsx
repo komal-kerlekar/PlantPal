@@ -322,7 +322,7 @@ const Dashboard = () => {
                 </div>
 
                 <img
-                  src={`${import.meta.env.VITE_API_URL}/${plant.image}`}
+                  src={plant.image}
                   alt={plant.name}
                   className="card-img-top"
                   style={{ height: "150px", objectFit: "cover" }}
