@@ -22,6 +22,7 @@ const plantSchema = new mongoose.Schema(
 
     location: String,
     sunlight: String,
+    soil: String,
 
     userId: {
       type: mongoose.Schema.Types.ObjectId,

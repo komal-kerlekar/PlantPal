@@ -334,6 +334,9 @@ const Dashboard = () => {
                     <small className="text-muted d-block">
                       📍 {plant.location || "Unknown"}
                     </small>
+                    <small className="text-muted d-block" style={{ fontSize: "12px" }}>
+                      ☀️ Light: {plant.sunlight || "N/A"} | 🪴 Soil: {plant.soil || "N/A"}
+                    </small>
                   </div>
 
                   <div>

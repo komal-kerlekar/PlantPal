@@ -53,6 +53,8 @@ exports.createPlant = async (req, res, next) => {
       image: imagePath,
       archetype: archetypeKey,
       wateringFrequency: archetype.wateringFrequency,
+      sunlight: archetype.sunlight,
+      soil: archetype.soil,
       lastWateredAt: new Date()
     });
 
