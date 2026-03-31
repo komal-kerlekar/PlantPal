@@ -123,34 +123,53 @@ const Dashboard = () => {
     }
   };
 
-  const handleUpdatePlant = async () => {
-    try {
-      const token = localStorage.getItem("token");
+const handleUpdatePlant = async () => {
+  try {
+    const token = localStorage.getItem("token");
 
-      await fetch(
-        `${import.meta.env.VITE_API_URL}/api/plants/${editingPlant._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            name: editingPlant.name,
-            location: editingPlant.location,
-            wateringFrequency: editingPlant.wateringFrequency,
-          }),
-        }
-      );
+    // ✅ create object FIRST
+    const updatedData = {
+      name: editingPlant.name,
+      location: editingPlant.location,
+    };
 
-      setShowEditModal(false);
-      setEditingPlant(null);
-      fetchPlants();
-
-    } catch (error) {
-      console.error(error);
+    // ✅ conditionally add field
+    if (
+      editingPlant.wateringFrequency !== "" &&
+      editingPlant.wateringFrequency !== undefined
+    ) {
+      updatedData.wateringFrequency = Number(editingPlant.wateringFrequency);
     }
-  };
+
+    // ✅ now use it
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/plants/${editingPlant._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      }
+    );
+
+  const data = await res.json();
+
+
+    if (!res.ok) {
+      console.error("Update failed:", text);
+      return;
+    }
+
+    setShowEditModal(false);
+    setEditingPlant(null);
+    fetchPlants();
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <div className="dashboard-wrapper">
@@ -291,7 +310,7 @@ const Dashboard = () => {
                       <button
                         className="dropdown-item"
                         onClick={() => {
-                          setEditingPlant(plant);
+                          setEditingPlant({ ...plant });
                           setShowEditModal(true);
                         }}
                       >
@@ -423,7 +442,7 @@ const Dashboard = () => {
                   <input
                     type="number"
                     className="form-control"
-                    value={editingPlant.wateringFrequency}
+                    value={editingPlant.wateringFrequency || ""}
                     onChange={(e) =>
                       setEditingPlant({
                         ...editingPlant,

@@ -10,7 +10,8 @@ const createPlantSchema = Joi.object({
 
 const updatePlantSchema = Joi.object({
   name: Joi.string().min(2).optional(),
-  location: Joi.string().optional()
+  location: Joi.string().optional(),
+  wateringFrequency: Joi.number().required(),
 });
 
 module.exports = {

@@ -25,25 +25,42 @@ exports.createPlant = async (req, res, next) => {
 
     const imagePath = req.body?.image || null;
 
-    //  FUZZY CORRECTION
-    const correctedName = fuzzyMatch(name);
+// ✅ Step 1: normalize ORIGINAL input FIRST
+const normalizedInput = name
+  .toLowerCase()
+  .replace(/[^a-z\s]/g, "")
+  .replace(/\s+/g, " ")
+  .trim();
 
-    // For DB mapping (lowercase)
-    const normalizedName = correctedName.toLowerCase().trim();
+// ✅ Step 2: run fuzzy on normalized input
+const correctedName = fuzzyMatch(normalizedInput);
 
-    // For UI display (proper capitalization)
-    const displayName = normalizedName.replace(
-      /\b\w/g,
-      (char) => char.toUpperCase()
-    );
+// ✅ Step 3: normalize fuzzy result
+const normalizedName = correctedName
+  .toLowerCase()
+  .replace(/[^a-z\s]/g, "")
+  .replace(/\s+/g, " ")
+  .trim();
 
-    // Safe archetype mapping
-    const archetypeKey =
-      plantNameToArchetype[normalizedName] || "foliage";
+// ✅ DEBUG (now in correct order)
+console.log("Original name:", name);
+console.log("Normalized input:", normalizedInput);
+console.log("Corrected name:", correctedName);
+console.log("Final normalized:", normalizedName);
+
+// ✅ Step 4: mapping (THIS IS THE REAL FIX)
+const archetypeKey =
+  plantNameToArchetype[normalizedInput] ||   // exact match FIRST
+  plantNameToArchetype[normalizedName] ||    // fuzzy match SECOND
+  "foliage";
 
     const archetype =
       plantArchetypes[archetypeKey] ||
       plantArchetypes["foliage"];
+      const displayName = normalizedName.replace(
+  /\b\w/g,
+  (char) => char.toUpperCase()
+);
 
     //  Create plant
     const plant = await Plant.create({

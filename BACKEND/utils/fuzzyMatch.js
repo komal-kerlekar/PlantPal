@@ -1,14 +1,7 @@
 // utils/fuzzyMatch.js
+const { plantNameToArchetype } = require("./plantArchetypes");
 
-const knownPlants = [
-    "aloe vera",
-    "snake plant",
-    "money plant",
-    "peace lily",
-    "monstera deliciosa",
-    "pothos",
-    "areca palm",
-];
+const knownPlants = Object.keys(plantNameToArchetype);
 
 function normalize(str) {
     return str
