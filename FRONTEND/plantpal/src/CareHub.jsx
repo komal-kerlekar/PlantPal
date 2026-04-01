@@ -61,7 +61,7 @@ const LeafletSection = () => {
 
   // Fetch single article
   useEffect(() => {
-    if (selectedLesson) {
+   if (selectedLesson && selectedLesson.slug) {
       const fetchArticle = async () => {
         try {
           const res = await fetch(
@@ -87,21 +87,76 @@ const LeafletSection = () => {
     myths: "Common Mistakes & Myths"
   };
 
-  const modules = Object.entries(
-    articles.reduce((acc, article) => {
-      if (!acc[article.category]) {
-        acc[article.category] = [];
-      }
-      acc[article.category].push(article);
-      return acc;
-    }, {})
-  ).map(([category, lessons]) => ({
-    id: category,
-    title: categoryLabels[category] || category,
-    level: "Structured Learning",
-    lessons,
-  }));
+const baseModules = Object.entries(
+  articles.reduce((acc, article) => {
+    if (!acc[article.category]) {
+      acc[article.category] = [];
+    }
+    acc[article.category].push(article);
+    return acc;
+  }, {})
+).map(([category, lessons]) => ({
+  id: category,
+  title: categoryLabels[category] || category,
+  level: "Structured Learning",
+  lessons,
+}));
 
+// 🎥 VIDEO MODULE
+const videoModule = {
+  id: "videos",
+  title: "🎥 Learn Visually",
+  level: "Video Guides",
+lessons: [
+   {
+    title: "Correct way of watering",
+    videoUrl: "https://www.youtube.com/embed/p-7rZkZKR9I"
+  },
+   {
+    title: "Indoor plants:Complete Care",
+    videoUrl: "https://www.youtube.com/embed/K5iIhI4QwXY"
+  },
+    {
+    title: "Seed germination",
+    videoUrl: "https://www.youtube.com/embed/bF6i3ehRrHw"
+  },
+    {
+    title: "Compost basics",
+    videoUrl: "https://www.youtube.com/embed/B9w2dMo0CvY"
+  },
+   {
+    title: "Prepare soil mixture for plants",
+    videoUrl: "https://www.youtube.com/embed/e4_BHgSmcSY"
+  },
+    {
+    title: "Organic pesticide for plants",
+    videoUrl: "https://www.youtube.com/embed/MJY67moFXK0"
+  },
+    {
+    title: "Pruning tips",
+    videoUrl: "https://www.youtube.com/embed/MBeJhsTnLOA"
+  },
+  {
+    title: "Fungus problems and treatment",
+    videoUrl: "https://www.youtube.com/embed/1Ewn-ufvJcc"
+  },
+  {
+    title: "Neen pesticide(Organic)",
+    videoUrl: "https://www.youtube.com/embed/SlfQxmhX-Gk"
+  },
+  {
+    title: "Repot new and old plants",
+    videoUrl: "https://www.youtube.com/embed/dTqLT9RQT4g"
+  },
+   {
+    title: "Hard and root pruning",
+    videoUrl: "https://www.youtube.com/embed/B5gcQsFwPp4"
+  }
+]
+};
+
+// ✅ FINAL MODULES
+const modules = [...baseModules, videoModule];
   return (
     <div>
 
@@ -145,18 +200,23 @@ const LeafletSection = () => {
 
           <h5 className="fw-bold mb-3">{selectedModule.title}</h5>
 
-          {selectedModule.lessons.map((lesson) => (
-            <div
-              key={lesson._id || lesson.slug}
-              className="leaflet-lesson-item mb-2"
-              onClick={() => {
-                setSelectedLesson(lesson);
-                setView("article");
-              }}
-            >
-              {lesson.title}
-            </div>
-          ))}
+          {selectedModule.lessons.map((lesson, index) => (
+  <div
+    key={lesson._id || lesson.slug || index}
+    className="leaflet-lesson-item mb-2"
+    onClick={() => {
+  if (lesson.videoUrl) {
+    setSelectedLesson(lesson);
+    setView("video");   
+  } else {
+    setSelectedLesson(lesson);
+    setView("article");
+  }
+}}
+  >
+    {lesson.title}
+  </div>
+))}
         </>
       )}
 
@@ -252,6 +312,32 @@ const LeafletSection = () => {
           </div>
         </>
       )}
+      {view === "video" && selectedLesson && (
+  <>
+    <button
+      className="btn btn-sm btn-outline-secondary mb-4"
+      onClick={() => {
+        setView("lessons");
+        setSelectedLesson(null);
+      }}
+    >
+      ← Back
+    </button>
+
+    <div style={{ maxWidth: "700px", margin: "0 auto" }}>
+      <h4 className="fw-bold mb-3">{selectedLesson.title}</h4>
+
+      <iframe
+        width="100%"
+        height="350"
+        src={selectedLesson.videoUrl || ""}
+        title={selectedLesson.title}
+        frameBorder="0"
+        allowFullScreen
+      ></iframe>
+    </div>
+  </>
+)}
     </div>
   );
 };

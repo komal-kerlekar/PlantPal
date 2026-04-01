@@ -10,6 +10,12 @@
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+/* ===== FIX TEXT CONTRAST INSIDE GROWTH CARDS ===== */
+
+.growth-card {
+  /* color: #ffffff; */
+   --bs-card-color: var(--text);
+}
 
 .growth-card:hover {
   transform: translateY(-4px);
@@ -21,14 +27,17 @@
   object-fit: cover;
   border-bottom: 3px solid #198754;
 }
-
+/* .growth-card .card-text {
+  color: inherit !important;
+} */
 .card-title {
   font-weight: 600;
 }
 
 .card-text {
   font-size: 0.95rem;
-  color: #444;
+  color: var(--text);  
+   /* ✅ theme-aware */
 }
 
 /* ========== IMAGE PREVIEW ========== */
@@ -98,4 +107,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+/* ===== FINAL FIX (THEME SAFE) ===== */
+
+.user-note {
+  /* color: var(--text) !important; */
+   color: var(--text) !important;
 }

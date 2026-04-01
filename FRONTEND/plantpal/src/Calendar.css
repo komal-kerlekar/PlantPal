@@ -1,9 +1,8 @@
 .checklist-page {
-  background: #f4f7f6;
+  background: var(--bg);
+  color: var(--text);
   height: 100vh;
-  /* IMPORTANT */
   overflow-y: auto;
-  /* IMPORTANT */
   padding-bottom: 80px;
   padding-left: 12px;
   padding-right: 12px;
@@ -13,8 +12,8 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: #198754;
-  color: white;
+  background: var(--surface);
+color: var(--text);
   font-size: 20px;
   font-weight: 600;
   padding: 15px;
@@ -53,9 +52,7 @@
   text-decoration: line-through;
 }
 
-/* .list-group {
-  overflow-x: hidden;
-} */
+
 .check-circle.disabled {
   opacity: 0.4;
   pointer-events: none;
@@ -96,4 +93,9 @@
 .completed {
   text-decoration: line-through;
   opacity: 0.6;
+}
+.list-group-item {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border: none;
 }

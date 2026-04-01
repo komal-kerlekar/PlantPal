@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./GrowthLog.css";
 import { useLocation } from "react-router-dom";
+import PlantDetailModal from "./plantDetailModal";
 
 const GrowthLog = () => {
   const [logs, setLogs] = useState([]);
@@ -12,6 +13,11 @@ const GrowthLog = () => {
   const [fileKey, setFileKey] = useState(Date.now());
   const [showModal, setShowModal] = useState(false);
   const location = useLocation();
+  const [selectedLog, setSelectedLog] = useState(null);
+
+ const handleCardClick = (log) => {
+  setSelectedLog(log);
+};
 
   const token = localStorage.getItem("token");
 
@@ -156,6 +162,25 @@ const GrowthLog = () => {
     }
   };
 
+  const getPlantMessage = (plant) => {
+  if (!plant) return "";
+
+  const today = new Date();
+  const lastDate = new Date(plant.lastWateredAt);
+
+  const diffDays = Math.floor(
+    (today - lastDate) / (1000 * 60 * 60 * 24)
+  );
+
+  if (diffDays <= plant.wateringFrequency) {
+    return "I’m growing well, keep it up! 🌿";
+  } else if (diffDays <= plant.wateringFrequency + 2) {
+    return "Hey, I could use a little more care 💧";
+  } else {
+    return "I’ve been feeling a bit neglected lately... 😔";
+  }
+};
+
   return (
     <div className="container growth-log-page py-4">
 
@@ -174,7 +199,11 @@ const GrowthLog = () => {
             className="col-md-6 col-lg-4 mb-4"
             key={log._id}
           >
-            <div className="card growth-card h-100">
+            <div
+  className="card growth-card h-100"
+  style={{ cursor: "pointer" }}
+  onClick={() => handleCardClick(log)}
+>
 
               {log.photo && (
                 <img
@@ -183,13 +212,25 @@ const GrowthLog = () => {
                   className="card-img-top"
                 />
               )}
-
               <div className="card-body">
-                <h5 className="card-title">
-                  {log.plant?.name || "Unknown Plant"}
-                </h5>
-                <p className="card-text">{log.note}</p>
-              </div>
+  <h5 className="card-title">
+    {log.plant?.name || "Unknown Plant"}
+  </h5>
+
+ <p style={{ color:"#33946f", fontWeight: 500 }}>
+  {log.note}
+</p>
+
+  {/* 🌿 Plant Message */}
+  <p className="text-success small mb-1">
+    🌱 {getPlantMessage(log.plant)}
+  </p>
+
+  {/* 👇 Click hint */}
+  <small className="text-muted">
+    Tap for more details →
+  </small>
+</div>
 
               <div className="card-footer d-flex justify-content-between align-items-center text-muted">
 
@@ -200,7 +241,10 @@ const GrowthLog = () => {
                 <i
                   className="bi bi-trash text-danger"
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleDelete(log._id)}
+                  onClick={(e) => {
+  e.stopPropagation();
+  handleDelete(log._id);
+}}
                 ></i>
 
               </div>
@@ -221,7 +265,7 @@ const GrowthLog = () => {
       {/* Modal */}
       {showModal && (
         <div className="modal-overlay">
-          <div className="modal-box">
+          <div className="modal-box modal-content custom-modal">
             <h5 className="mb-3">Write New Log 🌱</h5>
 
             <form onSubmit={handleSubmit}>
@@ -295,8 +339,15 @@ const GrowthLog = () => {
           </div>
         </div>
       )}
+      {selectedLog && (
+  <PlantDetailModal
+    log={selectedLog}
+    onClose={() => setSelectedLog(null)}
+  />
+)}
 
     </div>
+    
   );
 };
 

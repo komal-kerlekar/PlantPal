@@ -19,7 +19,10 @@ const plantSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-
+    streak: {
+  type: Number,
+  default: 0
+},
     location: String,
     sunlight: String,
     soil: String,

@@ -340,12 +340,17 @@ const handleUpdatePlant = async () => {
                   </ul>
                 </div>
 
-                <img
-                  src={plant.image}
-                  alt={plant.name}
-                  className="card-img-top"
-                  style={{ height: "150px", objectFit: "cover" }}
-                />
+                <div style={{ aspectRatio: "16 / 9", overflow: "hidden" }}>
+  <img
+    src={plant.image}
+    alt={plant.name}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover"
+    }}
+  />
+</div>
 
                 <div className="card-body p-2 d-flex justify-content-between align-items-center">
                   <div>

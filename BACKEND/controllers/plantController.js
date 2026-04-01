@@ -144,8 +144,7 @@ exports.getPlantById = async (req, res, next) => {
   }
 };
 
-
-// UPDATE
+//update
 exports.updatePlant = async (req, res, next) => {
   try {
     const plant = await Plant.findById(req.params.id);
@@ -160,6 +159,7 @@ exports.updatePlant = async (req, res, next) => {
       throw new Error("Not authorized");
     }
 
+    // 🔹 Name update
     if (req.body.name) {
       const correctedName = fuzzyMatch(req.body.name);
 
@@ -183,9 +183,35 @@ exports.updatePlant = async (req, res, next) => {
       plant.wateringFrequency = archetype.wateringFrequency;
     }
 
+    // 🔹 Manual frequency update
+    if (req.body.wateringFrequency !== undefined) {
+      plant.wateringFrequency = req.body.wateringFrequency;
+      plant.streak = 0; // reset streak (recommended)
+    }
+
     plant.location = req.body.location || plant.location;
 
     const updatedPlant = await plant.save();
+
+    // 🔹 Sync care reminder
+    const care = await Care.findOne({
+      plant: plant._id,
+      type: "Watering"
+    });
+
+    if (care) {
+      care.frequency = plant.wateringFrequency;
+
+      const now = new Date();
+      const nextDueDate = new Date(now);
+      nextDueDate.setDate(
+        now.getDate() + plant.wateringFrequency
+      );
+
+      care.nextDueDate = nextDueDate;
+
+      await care.save();
+    }
 
     res.json(updatedPlant);
 
@@ -238,7 +264,23 @@ exports.markAsWatered = async (req, res, next) => {
       throw new Error("Not authorized");
     }
 
-    plant.lastWateredAt = new Date();
+    //  STREAK LOGIC START
+    const today = new Date();
+    const lastDate = new Date(plant.lastWateredAt);
+
+    const diffTime = today - lastDate;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays <= plant.wateringFrequency + 1) {
+      plant.streak = (plant.streak || 0) + 1;
+    } else {
+      plant.streak = 1;
+    }
+
+    // update last watered
+    plant.lastWateredAt = today;
+    //  STREAK LOGIC END
+
     await plant.save();
 
     const care = await Care.findOne({

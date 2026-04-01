@@ -46,3 +46,69 @@ html, body {
   padding: 0;
   /* overflow-x: hidden; */
 }
+/* ===== CLEAN MODAL FIX (SAFE) ===== */
+
+.custom-modal {
+  border-radius: 12px;
+}
+
+/* Fix faded modal text ONLY */
+.custom-modal p,
+.custom-modal span,
+.custom-modal small,
+.custom-modal label,
+.custom-modal h4,
+.custom-modal h5 {
+  opacity: 1 !important;
+}
+
+/* Fix inputs text (without breaking UI) */
+.custom-modal input,
+.custom-modal textarea,
+.custom-modal select {
+  opacity: 1 !important;
+  color: inherit !important;
+}
+
+/* Fix buttons */
+.custom-modal button {
+  opacity: 1 !important;
+}
+/* ===== FORCE MODAL TEXT VISIBILITY ===== */
+
+.custom-modal {
+  opacity: 1 !important;
+}
+
+.custom-modal * {
+  opacity: 1 !important;
+  color: #212529 !important; /* strong readable dark */
+}
+
+/* Keep icons visible */
+.custom-modal i {
+  color: inherit !important;
+}
+/* ===== USER NOTE FIX (FINAL) ===== */
+/* ===== FIX CARD FADE (REAL FIX) ===== */
+
+.card,
+.card-body {
+  opacity: 1 !important;
+}
+
+.user-note {
+  color: #e8f5e9 !important;   /* light readable green */
+ 
+  font-weight: 500;
+}
+
+/* Light mode */
+body:not(.dark-mode) .user-note {
+  color: #212529 !important;
+}
+
+/* Dark mode */
+body.dark-mode .user-note {
+  color: #e8f5e9 !important;
+}

@@ -113,7 +113,7 @@ const Layout = () => {
             <hr />
 
             <div
-              className="menu-item text-danger"
+              className="modal-content custom-modal menu-item text-danger"
               onClick={() => {
                 setIsMenuOpen(false);
                 setShowLogoutModal(true);
@@ -154,7 +154,9 @@ const Layout = () => {
       {showLogoutModal && (
         <div className="logout-modal-overlay">
           <div className="logout-modal">
-            <h6>Are you sure you want to logout?</h6>
+           <p style={{ color: "#2f5d3a", fontWeight: 500 }}>
+  Are you sure you want to logout?
+</p>
             <div className="d-flex justify-content-end gap-2 mt-3">
               <button
                 className="btn btn-secondary btn-sm"
